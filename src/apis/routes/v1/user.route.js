@@ -1,12 +1,11 @@
 const express = require('express')
+const { authController, userController } = require('../../controllers')
+const validate = require('../../../middlewares/validate')
 
 const router = express.Router()
 
-module.exports = router
+router.get('/', userController.listUser)
+router.get('/:key', userController.search)
 
-/**
- * @swagger
- * tags:
- *   name: Users
- *   description: User management and retrieval
- */
+
+module.exports = router

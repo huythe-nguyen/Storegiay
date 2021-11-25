@@ -39,6 +39,21 @@ const userSchema = mongoose.Schema(
             type: Boolean,
             default: false,
         },
+        role: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        address: {
+            type: String,
+            required: true,
+            trim: true,
+        },
+        phone: {
+            type: String,
+            required: true,
+            trim: true,
+        },
     },
     {
         timestamps: true,
@@ -47,6 +62,7 @@ const userSchema = mongoose.Schema(
 
 userSchema.plugin(toJSON)
 userSchema.plugin(paginate)
+userSchema.index({'$**': 'text'});
 
 /**
  * Check if email is taken

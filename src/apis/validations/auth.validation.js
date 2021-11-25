@@ -12,7 +12,7 @@ const loginSchema = {
 const logoutSchema = {
     body: Joi.object().keys({
         accessToken: Joi.string(),
-        refreshToken: Joi.string().required(),
+        refreshToken: Joi.string(),
     }),
 }
 

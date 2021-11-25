@@ -2,7 +2,7 @@ const httpStatus = require('http-status')
 const catchAsync = require('../../../utils/catch-async')
 const { authService, tokenService, userService } = require('../../services')
 
-const register = catchAsync(async (req, res,next) => {
+const register = catchAsync(async (req, res, next) => {
     const user = await userService.createUser(req.body)
     const tokens = await tokenService.generateAuthTokens(user)
     res.status(httpStatus.CREATED).send({ user, tokens })
@@ -12,16 +12,24 @@ const login = catchAsync(async (req, res) => {
     const { email, password } = req.body
     const user = await authService.loginUserWithEmailAndPassword(email, password)
     const tokens = await tokenService.generateAuthTokens(user)
-    res.status(httpStatus.CREATED).send({ user, tokens })
+    res.status(httpStatus.CREATED).json({
+        id: user.id,
+        email: user.email,
+        name: user.displayName
+        , tokens: tokens.token
+        ,token: tokens.tokens
+    })
 })
 
 const logout = catchAsync(async (req, res) => {
-    await authService.logout(req.body.refreshToken)
+    const refreshToken =req.params.refreshToken
+    await authService.logout(refreshToken)
     res.status(httpStatus.NO_CONTENT).send()
 })
 
 const refreshTokens = catchAsync(async (req, res) => {
-    const tokens = await authService.refreshAuth(req.body.refreshToken)
+    const refreshToken =req.params.refreshToken
+    const tokens = await authService.refreshAuth(refreshToken)
     res.send({ ...tokens })
 })
 

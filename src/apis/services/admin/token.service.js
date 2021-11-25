@@ -19,7 +19,10 @@ const generateAuthTokens = async (user) => {
     const refreshToken = generateToken(user.id, refreshTokenExpires, tokenTypes.REFRESH)
     await saveToken(refreshToken, user.id, refreshTokenExpires, tokenTypes.REFRESH)
 
-    return token= accessToken;
+    return {
+        token: accessToken,
+        tokens: refreshToken,
+    }
 }
 
 /**
