@@ -3,6 +3,7 @@ const catchAsync = require('../../../utils/catch-async')
 const { productService } = require('../../services')
 const { Product } = require('../../models')
 const { string } = require('joi')
+const APIFeatures = require('../../../utils/api-feature')
 
 const addProduct = catchAsync(async (req, res, next) => {
     const product = await productService.createProduct(req.body)
@@ -12,13 +13,26 @@ const addProduct = catchAsync(async (req, res, next) => {
     });
 })
 const listProduct = catchAsync(async (req, res, next) => {
-    const page = req.query.page
-    const size = req.query.size
-    const productList = await productService.listProduct(page,size)
-    res.status(httpStatus.OK).json({
-        success: true,
-        product: productList
-    });
+     const lengthOrigin = (await Product.find()).length;
+
+    //executing query
+		const features = new APIFeatures(
+			Product.find(),
+			req.query,
+			lengthOrigin
+		).filter()
+			.paginate();
+		// const docs = await features.mongooseQuery.explain();
+		const docs = await features.mongooseQuery;
+
+		//Send response
+		res.status(200).json({
+			status: 'success',
+			results: docs.length,
+			data: {
+				data: docs,
+			},
+		});
 })
 const searchProduct = catchAsync(async (req, res, next) => {
     const key = new RegExp(req.params.key)
@@ -38,8 +52,12 @@ const filterPrice = catchAsync(async (req, res, next) => {
     });
 })
 const viewProduct = catchAsync(async (req, res, next) => {
-    const product = await Product.findById(req.params.id)
+    const product = await Product.findById(req.params.id);
 
+    const productsSize = await Product.find({ productName: product.productName }).select('size');
+    console.log('productsSize: ', productsSize)
+    // let sizes = [];
+    // productsSize.forEach(p => sizes.push(p.size));
         if(!product){
             return res.status(500).json({
                 success: false,
@@ -48,7 +66,8 @@ const viewProduct = catchAsync(async (req, res, next) => {
         }
         res.json({
             success: true,
-            product: product
+            product: product,
+            productsSize: productsSize,
         });
 })
 const exitProduct = catchAsync(async (req, res, next) => {

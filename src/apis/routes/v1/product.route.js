@@ -13,4 +13,6 @@ router.get('/edit/:id', productController.viewProduct)
 router.put('/edit/:id', productController.exitProduct)
 router.delete('/:id', productController.deleteProduct)
 
+
+
 module.exports = router

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
+const crypto = require('crypto')
 
 const { toJSON, paginate } = require('./plugins')
 
@@ -39,21 +40,21 @@ const userSchema = mongoose.Schema(
             type: Boolean,
             default: false,
         },
-        role: {
+           role: {
             type: String,
-            required: true,
-            trim: true,
+            enum: ['admin', 'customer'],
+            default: 'customer'
+        },
+         phone: {
+            type: Number,
+            min: [9, 'Password must be valid']
         },
         address: {
             type: String,
-            required: true,
-            trim: true,
+            trim: true
         },
-        phone: {
-            type: String,
-            required: true,
-            trim: true,
-        },
+        passwordResetToken: String,
+		passwordResetExpires: Date,
     },
     {
         timestamps: true,
@@ -84,6 +85,27 @@ userSchema.methods.isPasswordMatch = async function (password) {
     const user = this
     return bcrypt.compare(password, user.password)
 }
+
+userSchema.methods.correctPassword = async function (
+	candidatePassword,
+	userPassword
+) {
+	return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+//method to create reset password token
+userSchema.methods.createResetPasswordToken = function () {
+	const resetToken = crypto.randomBytes(32).toString('hex');
+
+	this.passwordResetToken = crypto
+		.createHash('sha256')
+		.update(resetToken)
+		.digest('hex');
+
+	this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+
+	return resetToken;
+};
 
 userSchema.pre('save', async function (next) {
     const user = this

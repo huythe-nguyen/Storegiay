@@ -1,10 +1,10 @@
 const express = require('express')
 
-const authRoute = require('./v1/auth.route')
-const userRoute = require('./v1/user.route')
-const projectRoute = require('./v1/product.route')
-const brandRoute = require('./v1/brand.route')
-const newRoute = require('./v1/new.route')
+const authRoute = require('../routes/v1/auth.route')
+const userRoute = require('../routes/v1/user.route')
+const projectRoute = require('../routes/v1/product.route')
+const brandRoute = require('../routes/v1/brand.route')
+const newRoute = require('../routes/v1/new.route')
 
 const router = express.Router()
 
@@ -28,6 +28,10 @@ const defaultRoutes = [
     {
         path: '/v1/admin/new',
         route: newRoute,
+    },
+    {
+        path: '/v1/user/product',
+        route: projectRoute,
     },
 ]
 

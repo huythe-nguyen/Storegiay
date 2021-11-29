@@ -1,3 +1,6 @@
+const dotenv = require('dotenv');
+dotenv.config({ path: './.env' });
+
 const Logger = require('./libs/logger')
 
 const bannerLogger = require('./libs/banner')

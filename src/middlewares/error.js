@@ -8,7 +8,7 @@ const Logger = require('../libs/logger')
 const logger = new Logger(__filename)
 
 const errorConverter = (err, req, res, next) => {
-    let error = err
+    let error = {...err}
 
     if (!(error instanceof ApiError)) {
         const statusCode =
@@ -20,7 +20,7 @@ const errorConverter = (err, req, res, next) => {
 }
 
 const errorHandler = (err, req, res, next) => {
-    const { statusCode, message } = err
+    let { statusCode, message } = err
 
     if (env.isProduction && !err.isOperational) {
         statusCode = httpStatus.INTERNAL_SERVER_ERROR
