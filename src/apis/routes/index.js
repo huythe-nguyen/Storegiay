@@ -8,6 +8,8 @@ const newRoute = require('./v1/new.route')
 const oderRoute = require('./v1/oder.route')
 const cartRoute = require('./v1/cart.route')
 
+const projectRouteUser = require('./v2/product.route')
+
 const router = express.Router()
 
 const defaultRoutes = [
@@ -38,6 +40,10 @@ const defaultRoutes = [
     {
         path: '/v1/admin/cart',
         route: cartRoute,
+    },
+    {
+        path: '/v1/user/product',
+        route: projectRouteUser,
     },
 ]
 

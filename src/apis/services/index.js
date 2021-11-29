@@ -6,3 +6,6 @@ module.exports.brandService = require('./admin/brand.service')
 module.exports.newService = require('./admin/new.service')
 module.exports.oderService = require('./admin/oder.service')
 module.exports.cartService = require('./admin/cart.service')
+
+
+module.exports.productUserService = require('./client/product.service')
