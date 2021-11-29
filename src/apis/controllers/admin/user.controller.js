@@ -1,7 +1,7 @@
 const httpStatus = require('http-status')
 const catchAsync = require('../../../utils/catch-async')
 const { userService } = require('../../services')
-
+const { User } = require('../../models')
 
 const listUser = catchAsync(async (req, res, next) => {
     const page = req.query.page
@@ -20,7 +20,22 @@ const search = catchAsync(async (req, res, next) => {
         employee: List
     });
 })
+const detail = catchAsync(async (req, res, next) => {
+    const users = await User.findById(req.params.id)
+
+        if(!users){
+            return res.status(500).json({
+                success: false,
+                message: 'No product existed'
+            });
+        }
+        res.json({
+            success: true,
+            employee: users
+        });
+})
 module.exports = {
     listUser,
-    search
+    search,
+    detail
 }

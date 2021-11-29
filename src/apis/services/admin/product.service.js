@@ -48,11 +48,7 @@ const filterPrice = async (min,max) => {
     const listPrice = await Product.find({price: { $gte: min, $lte: max }});
     return listPrice
 }
-const filterColor = async (min,max) => {
-    const listPrice = await Product.find({price: { $gte: min, $lte: max } });
-    return listPrice
-}
-const updateProduct = async (id,productBody) => {
+const updateProduct = async (id,producsttBody) => {
     const product = await Product.findById(id);
     return product.update(productBody)
 }
