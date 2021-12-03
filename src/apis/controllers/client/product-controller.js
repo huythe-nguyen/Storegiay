@@ -66,7 +66,7 @@ const viewProduct = catchAsync(async (req, res, next) => {
 
 const filterProduct = catchAsync(async (req, res, next) => {
     console.log(req.body);
-    productService.filterProduct(req.body.category, req.body.brand, req.body.priceMin, req.body.priceMax).then(products => {
+    productService.filterProduct(req.body.category, req.body.brand, req.body.priceMin, req.body.priceMax,req.body.size).then(products => {
         if(products){
             return res.status(200).json({
                 success: true,
@@ -109,9 +109,18 @@ const searchProduct = catchAsync(async (req, res, next) => {
         });
     });
 })
+const list = catchAsync(async (req, res, next) => {
+    const key = req.query.key
+    const productList = await Product.find(key)
+    res.status(httpStatus.OK).json({
+        success: true,
+        product: productList
+    });
+})
 module.exports = {
     listProduct,
     viewProduct,
     filterProduct,
-    searchProduct
+    searchProduct,
+    list
 }

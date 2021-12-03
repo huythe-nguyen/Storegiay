@@ -49,9 +49,20 @@ const update = async (id,oderBody) => {
     const oders = await Oder.findById(id);
     return oders.update(oderBody)
 }
+
+const countPrice = async (key) => {
+    count = 0;
+    const oders = await Oder.find({status: key});
+    if(oders){
+        count += oders.price
+        return count
+    }
+    return count
+}
 module.exports = {
     create,
     list,
     search,
-    update
+    update,
+    countPrice
 }

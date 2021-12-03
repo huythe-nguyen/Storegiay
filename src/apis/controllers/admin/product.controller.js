@@ -51,7 +51,7 @@ const viewProduct = catchAsync(async (req, res, next) => {
             product: product
         });
 })
-const exitProduct = catchAsync(async (req, res, next) => {
+const exitProduct = catchAsync(async (req, res) => {
     const id = req.params.id
     const product = await  productService.updateProduct(id,req.body)
     res.status(httpStatus.OK).json({

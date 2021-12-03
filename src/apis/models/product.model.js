@@ -38,7 +38,7 @@ const productSchema = mongoose.Schema(
         },
         productImg1:
             {
-                type: Array,
+                type: String,
                 trim: true
             }
         ,

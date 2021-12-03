@@ -9,3 +9,4 @@ module.exports.cartController = require('./admin/cart.controller')
 
 module.exports.authControllerUser = require('./client/auth-controller')
 module.exports.productControllerUser = require('./client/product-controller')
+module.exports.OrderControllerUser = require('./client/OrderServices')

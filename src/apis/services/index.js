@@ -9,3 +9,4 @@ module.exports.cartService = require('./admin/cart.service')
 
 
 module.exports.productUserService = require('./client/product.service')
+module.exports.productUserService = require('./client/product.service')

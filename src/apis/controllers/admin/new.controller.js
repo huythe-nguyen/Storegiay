@@ -11,10 +11,19 @@ const addNew = catchAsync(async (req, res) => {
     });
 })
 const listNew = catchAsync(async (req, res) => {
-    const list = await newService.view()
+    const page = req.query.page
+    const size = req.query.size
+    const List = await newService.view(page,size)
     res.status(httpStatus.OK).json({
         success: true,
-        news: list
+        news: List
+    });
+})
+const list = catchAsync(async (req, res) => {
+    const listNew = await New.find({state: "dang"});
+    res.status(httpStatus.OK).json({
+        success: true,
+        news: listNew
     });
 })
 const search = catchAsync(async (req, res, next) => {
@@ -75,5 +84,6 @@ module.exports = {
     viewNew,
     exitNew,
     deleteNew,
-    search
+    search,
+    list
 }

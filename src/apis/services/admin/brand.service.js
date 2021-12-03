@@ -15,12 +15,30 @@ const createBrand = async (brandBody) => {
     }
     return Brand.create(brandBody)
 }
-const view = async () => {
-    const list = await Brand.find({state:"Đang kinh doanh"});
-    if (list==0) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'No Brand')
+const view = async (page,size) => {
+    if(page){
+        pages = parseInt(page);
+        if(pages<1)
+            pages = 1;
+
+        sizes = parseInt(size);
+        if(sizes<5)
+            sizes = 5;
+        var skips = (pages-1)*sizes;
+        const list = await Brand.find({state:"Đang kinh doanh"}).skip(skips).limit(sizes)
+        return list
+    }else{
+        sizes = parseInt(size);
+        if(sizes<5)
+            sizes = 5;
+        const list = await Brand.find({state:"Đang kinh doanh"}).limit(sizes)
+        return list
     }
-    return list
+
+}
+const list = async () => {
+    const list = await Brand.find();
+    return list;
 }
 const search = async (key) => {
     const list = await Brand.find({$text: {$search: key}});
@@ -42,6 +60,7 @@ module.exports = {
     createBrand,
     updateBrand,
     search,
-    view
+    view,
+    list
 
 }

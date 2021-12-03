@@ -20,12 +20,13 @@ const updateProduct = async (id,productBody) => {
     }
     return product.update(productBody)
 }
-const filterProduct = async (category, brand, priceMin, priceMax,gender) => {
+const filterProduct = async (category, brand, priceMin, priceMax,gender,size) => {
     const query = {
         brand: brand || { $regex: "" },
         price: { $gt: priceMin || 0, $lt: priceMax || 9999999999 },
         status: category || { $regex: "" },
         gender: gender || { $regex:""},
+        size: size || { $regex:""},
     }
     console.log(query);
     const product = await Product.find(query);

@@ -40,7 +40,10 @@ const searchUser = async (key) => {
     const listUser = await User.find({$text: {$search: key } });
     return listUser
 }
-
+const update = async (id,userBody) => {
+    const user = await User.findById(id);
+    return user.update(userBody)
+}
 /**
  * Get user by email
  * @param {string} email
@@ -54,5 +57,6 @@ module.exports = {
     createUser,
     getUserByEmail,
     listuser,
-    searchUser
+    searchUser,
+    update
 }

@@ -41,17 +41,34 @@ const userSchema = mongoose.Schema(
         },
         role: {
             type: String,
-            required: true,
             trim: true,
+        },
+        lastName: {
+            type: String,
+
+        },
+        firstName: {
+            type: String,
+
+        },
+        phone: {
+            type: String
         },
         address: {
             type: String,
-            required: true,
             trim: true,
         },
-        phone: {
+        country: {
+            type: String
+        },
+        city: {
             type: String,
-            required: true,
+
+            trim: true,
+        },
+        HPBD: {
+            type: String,
+
             trim: true,
         },
     },

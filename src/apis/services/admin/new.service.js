@@ -17,12 +17,25 @@ const createNew = async (newBody) => {
     }
     return New.create(newBody)
 }
-const view = async () => {
-    const listNew = await New.find({state: ["cho","dang"]});
-    if (listNew==0) {
-        throw new ApiError(httpStatus.NOT_FOUND, 'No News')
+const view = async (page,size) => {
+    if(page){
+        pages = parseInt(page);
+        if(pages<1)
+            pages = 1;
+
+        sizes = parseInt(size);
+        if(sizes<5)
+            sizes = 5;
+        var skips = (pages-1)*sizes;
+        const listNew = await New.find({state: ["cho","dang"]}).skip(skips).limit(sizes)
+        return listNew
+    }else{
+        sizes = parseInt(size);
+        if(sizes<5)
+            sizes = 5;
+        const listNew = await New.find({state: ["cho","dang"]}).limit(sizes)
+        return listNew
     }
-    return listNew
 }
 const search = async (key) => {
     const listsearch = await New.find({$text: {$search: key}});

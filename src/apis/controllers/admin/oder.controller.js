@@ -52,10 +52,20 @@ const exit = catchAsync(async (req, res) => {
         oder: oder
     });
 })
+const count = catchAsync(async (req, res) => {
+    const key = req.params.status
+    let grandTotal = 0;
+    const list = await Oder.find({status: key})
+    res.status(httpStatus.OK).json({
+        success: true,
+        oder: grandTotal
+    });
+})
 module.exports = {
     add,
     list,
     search,
     view,
-    exit
+    exit,
+    count
 }

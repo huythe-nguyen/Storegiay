@@ -34,8 +34,17 @@ const detail = catchAsync(async (req, res, next) => {
             employee: users
         });
 })
+const update = catchAsync(async (req, res) => {
+    const id = req.params.id
+    const users = await  userService.update(id,req.body)
+    res.status(httpStatus.OK).json({
+        success: true,
+        employee: users
+    });
+})
 module.exports = {
     listUser,
     search,
-    detail
+    detail,
+    update
 }
