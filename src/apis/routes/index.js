@@ -5,6 +5,7 @@ const userRoute = require('../routes/v1/user.route')
 const projectRoute = require('../routes/v1/product.route')
 const brandRoute = require('../routes/v1/brand.route')
 const newRoute = require('../routes/v1/new.route')
+const cartRoute = require('../routes/v1/cart.route')
 
 const router = express.Router()
 
@@ -32,6 +33,10 @@ const defaultRoutes = [
     {
         path: '/v1/user/product',
         route: projectRoute,
+    },
+    {
+        path: '/v1/cart',
+        route: cartRoute,
     },
 ]
 

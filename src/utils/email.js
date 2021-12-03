@@ -9,6 +9,7 @@ module.exports = class Email {
 		this.displayName = user.displayName;
 		this.url = url;
 		this.from = `Shop admin <${process.env.EMAIL_FROM}>`;
+		this.idCart = user.id;
 	}
 
 	newTransport() {
@@ -47,6 +48,7 @@ module.exports = class Email {
 				displayName: this.displayName,
 				url: this.url,
 				subject,
+				idCart: this.idCart
 			}
 		);
 
@@ -73,5 +75,9 @@ module.exports = class Email {
 			'passwordReset',
 			'Your password reset token (valid for only 10 minutes)'
 		);
+	}
+
+	async sendCartInfo() {
+		await this.send('cartInfo', 'Gio hang cua ban!')
 	}
 };
