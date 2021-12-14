@@ -1,7 +1,7 @@
 const httpStatus = require('http-status')
 const catchAsync = require('../../../utils/catch-async')
 const { oderService } = require('../../services')
-const { Oder } = require('../../models')
+const { Cart } = require('../../models')
 
 
 const add = catchAsync(async (req, res, next) => {
@@ -31,7 +31,7 @@ const search = catchAsync(async (req, res, next) => {
     });
 })
 const view = catchAsync(async (req, res, next) => {
-    const oder = await Oder.findById(req.params.id)
+    const oder = await Cart.findById(req.params.id)
 
         if(!oder){
             return res.status(500).json({
@@ -53,12 +53,17 @@ const exit = catchAsync(async (req, res) => {
     });
 })
 const count = catchAsync(async (req, res) => {
-    const key = req.params.status
-    let grandTotal = 0;
-    const list = await Oder.find({status: key})
+    const key = req.params.state
+    const list = await Cart.find({state: key}).count()
     res.status(httpStatus.OK).json({
-        success: true,
-        oder: grandTotal
+        count: list
+    });
+})
+const total = catchAsync(async (req, res) => {
+    const key = req.params.state
+    const list = await Cart.find({state: key})
+    res.status(httpStatus.OK).json({
+        count: list
     });
 })
 module.exports = {
@@ -67,5 +72,6 @@ module.exports = {
     search,
     view,
     exit,
-    count
+    count,
+    total
 }

@@ -3,8 +3,14 @@ const httpStatus = require('http-status')
 const ApiError = require('../../../utils/api-error')
 const { Cart } = require('../../models')
 
+const { User } = require('../../models')
 
-
+/**
+ * Create a cart
+ * *@param {string} id
+ * @param {Object} cartBody
+ * @returns {Promise<Brand>}
+ */
 const list = async (page,size) => {
 
     if(page){

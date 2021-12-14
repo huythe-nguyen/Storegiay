@@ -1,7 +1,7 @@
 const httpStatus = require('http-status')
 
 const ApiError = require('../../../utils/api-error')
-const { Oder } = require('../../models')
+const { Cart } = require('../../models')
 
 /**
  * Create a product
@@ -11,9 +11,7 @@ const { Oder } = require('../../models')
  *
  */
 
-const create = async (oderBody) => {
-    return Oder.create(oderBody)
-}
+
 const list = async (page,size,key) => {
 
     if(page){
@@ -25,13 +23,13 @@ const list = async (page,size,key) => {
         if(sizes<5)
             sizes = 5;
         var skips = (pages-1)*sizes;
-        const list = await Oder.find({status: key}).skip(skips).limit(sizes)
+        const list = await Cart.find({state: key}).skip(skips).limit(sizes)
         return list
     }else{
         sizes = parseInt(size);
         if(sizes<5)
             sizes = 5;
-        const list = await Oder.find({status: key}).limit(sizes)
+        const list = await Cart.find({state: key}).limit(sizes)
         return list
     }
 
@@ -42,11 +40,11 @@ const search = async (key,statuss) => {
         status: statuss,
         idCard: key
     }
-    const list = await Oder.find(query);
+    const list = await Cart.find(query);
     return list
 }
 const update = async (id,oderBody) => {
-    const oders = await Oder.findById(id);
+    const oders = await Cart.findById(id);
     return oders.update(oderBody)
 }
 
@@ -60,7 +58,6 @@ const countPrice = async (key) => {
     return count
 }
 module.exports = {
-    create,
     list,
     search,
     update,

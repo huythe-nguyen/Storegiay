@@ -1,6 +1,4 @@
 const httpStatus = require('http-status')
-const { date } = require('joi')
-const { isDate } = require('moment')
 
 const ApiError = require('../../../utils/api-error')
 const { New } = require('../../models')
@@ -27,13 +25,13 @@ const view = async (page,size) => {
         if(sizes<5)
             sizes = 5;
         var skips = (pages-1)*sizes;
-        const listNew = await New.find({state: ["cho","dang"]}).skip(skips).limit(sizes)
+        const listNew = await New.find({state: ["cho","dang","kt"]}).skip(skips).limit(sizes)
         return listNew
     }else{
         sizes = parseInt(size);
         if(sizes<5)
             sizes = 5;
-        const listNew = await New.find({state: ["cho","dang"]}).limit(sizes)
+        const listNew = await New.find({state: ["cho","dang","kt"]}).limit(sizes)
         return listNew
     }
 }

@@ -1,7 +1,7 @@
 const express = require('express')
 
-const { authController, productController } = require('../../controllers')
-const { authValidation, productValidation } = require('../../validations')
+const { authController } = require('../../controllers')
+const { authValidation } = require('../../validations')
 
 const authControllerUser = require('./../../controllers/client/auth-controller');
 const validate = require('../../../middlewares/validate')

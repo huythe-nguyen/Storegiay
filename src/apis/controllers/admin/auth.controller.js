@@ -13,6 +13,7 @@ const login = catchAsync(async (req, res) => {
     const user = await authService.loginUserWithEmailAndPassword(email, password)
     const tokens = await tokenService.generateAuthTokens(user)
     res.status(httpStatus.CREATED).json({
+        user:user,
         id: user.id,
         email: user.email,
         name: user.displayName

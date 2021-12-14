@@ -35,10 +35,10 @@ exports.signup = catchAsync(async (req, res, next) => {
 	try {
 
 		const newUser = await User.create(req.body);
-	
+
 		const url = `Den trang chu ngay nhe!`;
 		await new Email(newUser, url).sendWelcome();
-	
+
 		createSendToken(newUser, 201, res);
 	} catch (err) {
 		console.log(err);
@@ -69,7 +69,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 	//1) getting token and check of it's there
 	if (
 		req.headers.authorization &&
-		req.headers.authorization.startsWith('Bearer')
+		req.headers.authorization.startsWith('Bearer ')
 	) {
 		token = req.headers.authorization.split(' ')[1];
 	}
@@ -137,7 +137,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 
 	// 3) send it to user's email
 	try {
-		const resetURL = `${req.protocol}://${req.get('host')}/api/v1/auth/user/resetPassword/${resetToken}`;
+		const resetURL = `${req.protocol}://localhost:4200/resetPassword/${resetToken}`;
 
 		await new Email(user, resetURL).sendPasswordReset();
 
@@ -170,6 +170,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 		passwordResetToken: hashToken,
 		passwordResetExpires: { $gt: Date.now() },
 	});
+
 
 	// 2) check if token hasn't expired yet and user exists, then do the reset password functionality
 	if (!user) {

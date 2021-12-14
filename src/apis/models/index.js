@@ -5,6 +5,3 @@ module.exports.Brand = require('./brand.model')
 module.exports.New = require('./news.model')
 module.exports.Oder = require('./oder.model')
 module.exports.Cart = require('./cart.model')
-
-module.exports.OrderDetailSchema = require('./cart.model')
-module.exports.OrderSchema = require('./cart.model')
