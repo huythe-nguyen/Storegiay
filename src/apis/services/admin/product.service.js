@@ -18,7 +18,7 @@ const createProduct = async (productBody) => {
     return Product.create(productBody)
 }
 const listProduct = async (page,size) => {
-
+    console.log(page,size)
     if(page){
         pages = parseInt(page);
         if(pages<1)

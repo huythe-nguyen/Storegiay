@@ -29,17 +29,6 @@ const listProduct = catchAsync(async (req, res, next) => {
 			},
 		});
 
-    // const productList = await Product.find()
-    //     if(productList.length==0){
-    //         return res.status(500).json({
-    //             success: false,
-    //             message: 'No employee existed'
-    //         });
-    //     }
-    //     res.json({
-    //         success: true,
-    //         products: productList
-    //     });
 })
 
 
@@ -66,7 +55,7 @@ const viewProduct = catchAsync(async (req, res, next) => {
 
 const filterProduct = catchAsync(async (req, res, next) => {
     console.log(req.body);
-    productService.filterProduct(req.body.category, req.body.brand, req.body.priceMin, req.body.priceMax,req.body.size).then(products => {
+    productUserService.filterProduct(req.body.category, req.body.brand, req.body.priceMin, req.body.priceMax,req.body.size).then(products => {
         if(products){
             return res.status(200).json({
                 success: true,
@@ -88,8 +77,8 @@ const filterProduct = catchAsync(async (req, res, next) => {
 })
 })
 
-const searchProduct = catchAsync(async (req, res, next) => {
-    productService.searchProduct(req.body.productName).then(products => {
+const searchProduct = catchAsync(async (req, res) => {
+    productUserService.searchProduct(req.body.productName).then(products => {
         if (products) {
             return res.status(200).json({
                 success: true,

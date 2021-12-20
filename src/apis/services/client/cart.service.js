@@ -2,7 +2,7 @@ const httpStatus = require('http-status')
 
 const ApiError = require('../../../utils/api-error')
 const { Cart } = require('../../models')
-const { User } = require('../../models')
+const { User,Product } = require('../../models')
 
 /**
  * Create a cart
@@ -20,6 +20,14 @@ const createCart = async (cartBody) => {
             user.phone = cartBody.phone;
         }
         await user.save();
+    }
+    for (let index = 0; index < cartBody.products.length; index++) {
+        const element = cartBody.products[index];
+        const product = await Product.findById(element.product)
+        if(product){
+            product.amount = product.amount - element.quantity
+            await product.save();
+        }
     }
     return await Cart.create(cartBody)
 }

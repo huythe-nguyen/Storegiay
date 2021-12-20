@@ -1,7 +1,7 @@
 const httpStatus = require('http-status')
 
 const ApiError = require('../../../utils/api-error')
-const { Cart } = require('../../models')
+const { Cart,Product } = require('../../models')
 
 /**
  * Create a product
@@ -35,16 +35,27 @@ const list = async (page,size,key) => {
 
 
 }
-const search = async (key,statuss) => {
-    const query = {
-        status: statuss,
-        idCard: key
-    }
-    const list = await Cart.find(query);
+const search = async (state,phone) => {
+    const list = await Cart.find({state:state, phone: phone});
     return list
 }
 const update = async (id,oderBody) => {
     const oders = await Cart.findById(id);
+    console.log(oders.products)
+    console.log(oderBody.state)
+    if(oderBody.state === 'cancel'){
+        for (let index = 0; index < oders.products.length; index++) {
+            const element = oders.products[index];
+            const product = await Product.findById(element.product)
+            console.log(product)
+            if(product){
+                product.amount = product.amount + element.quantity
+                await product.save();
+                console.log(product.amount)
+            }
+        }
+        return oders.update(oderBody)
+    }
     return oders.update(oderBody)
 }
 

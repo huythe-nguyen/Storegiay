@@ -22,9 +22,9 @@ const list = catchAsync(async (req, res, next) => {
     });
 })
 const search = catchAsync(async (req, res, next) => {
-    const key =req.body.key
-    const statuss = req.body.status
-    const list = await oderService.search(key,statuss)
+    const state = req.query.state
+    const phone = req.query.phone
+    const list = await oderService.search(state,phone)
     res.status(httpStatus.OK).json({
         success: true,
         oder: list
@@ -32,7 +32,6 @@ const search = catchAsync(async (req, res, next) => {
 })
 const view = catchAsync(async (req, res, next) => {
     const oder = await Cart.findById(req.params.id)
-
         if(!oder){
             return res.status(500).json({
                 success: false,
