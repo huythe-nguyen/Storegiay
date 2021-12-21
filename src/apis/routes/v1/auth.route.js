@@ -12,10 +12,12 @@ router.post('/login', validate(authValidation.loginSchema), authController.login
 router.post('/register', validate(authValidation.registerSchema), authController.register)
 router.post('/user/register', authControllerUser.signup);
 router.post('/user/registers', authControllerUser.register);
-router.post('/user/login', authControllerUser.login)
+router.get('/:id', authControllerUser.viewProfile);
+router.post('/user/login', authControllerUser.login);
 router.post('/forgotPassword', authControllerUser.forgotPassword);
-router.patch('/user/resetPassword/:token', authControllerUser.resetPassword)
-router.patch('/user/updateMe',authControllerUser.protect ,authControllerUser.updateMe);
+router.patch('/user/resetPassword/:token', authControllerUser.resetPassword);
+router.patch('/user/registerMail/:token', authControllerUser.registerMail);
+router.patch('/user/updateMe', authControllerUser.protect, authControllerUser.updateMe);
 router.patch('/user/updateMyPassword', authControllerUser.protect, authControllerUser.updatePassword);
 router.delete('/logout/:refreshToken', authController.logout)
 

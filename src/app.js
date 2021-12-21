@@ -9,7 +9,8 @@ const passportLoader = require('./loaders/passportLoader')
 const publicLoader = require('./loaders/publicLoader')
 const swaggerLoader = require('./loaders/swaggerLoader')
 const winstonLoader = require('./loaders/winstonLoader')
-
+const ejs = require('ejs');
+const path = require('path');
 /**
  * NODEJS API BOILERPLATE
  * ----------------------------------------
@@ -42,6 +43,8 @@ async function initApp() {
 
     // public Url
     publicLoader(app)
+    app.set('views', path.join(__dirname, 'views'));
+    app.set('view engine', 'ejs')
 }
 
 initApp()

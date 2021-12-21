@@ -21,17 +21,6 @@ const list = catchAsync(async (req, res, next) => {
         oder: oderList
     });
 })
-const viewDashboard = catchAsync(async (req, res, next) => {
-    const page = req.query.page
-    const size = req.query.size
-    const day = req.query.day
-    const key = req.params.status
-    const oderList = await oderService.viewDashboard(page,size,key,day)
-    res.status(httpStatus.OK).json({
-        success: true,
-        oder: oderList
-    });
-})
 const search = catchAsync(async (req, res, next) => {
     const state = req.query.state
     const phone = req.query.phone
@@ -64,8 +53,7 @@ const exit = catchAsync(async (req, res) => {
 })
 const count = catchAsync(async (req, res) => {
     const key = req.params.state
-    const day = req.query.day
-    const list = await oderService.counts(key,day)
+    const list = await Cart.find({state: key}).count()
     res.status(httpStatus.OK).json({
         count: list
     });
@@ -84,6 +72,5 @@ module.exports = {
     view,
     exit,
     count,
-    total,
-    viewDashboard
+    total
 }
